@@ -9,8 +9,11 @@ I have created a personal blogging website using flask.
 #Designing Database
   
    ->create a database blog_db using mysql
+   
    ->create two tables:
+   
       ->user with (user_id AUTOINCREMENT,firstname,lastname,userid,email,password)
+      
       ->blog with (blog_id AUTOINCREMENT,title,author,body)
       
 #How it works 
