@@ -1,5 +1,6 @@
 from flask import Flask,render_template,flash,request,session,redirect,url_for
 from flask_mysqldb import MySQL
+from werkzeug.security import generate_password_hash,check_password_hash
 import yaml
 
 app=Flask(__name__)
@@ -71,6 +72,7 @@ def register():
         if password!=cpassword:
             flash('passworddoesntmatch')
         else:
+            password=generate_password_hash(password)
             cur=mysql.connection.cursor()
             cur.execute("insert into user(first_name,last_name,username,email,password) values(%s,%s,%s,%s,%s)",(fname,lname,uname,email,password))
             cur.connection.commit()
@@ -90,7 +92,7 @@ def login():
         if res>0:
             user=cur.fetchone()
             if user[3]==uname:
-                if user[5]==password:
+                if check_password_hash(user[5],password):
                     session['login']='yes'
                     session['firstname']=user[1]
                     session['lastname']=user[2]
