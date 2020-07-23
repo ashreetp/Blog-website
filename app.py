@@ -1,12 +1,8 @@
 from flask import Flask,render_template,flash,request,session,redirect,url_for
-from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
-from flask_ckeditor import CKEditor
 import yaml
 
 app=Flask(__name__)
-Bootstrap(app)
-CKEditor(app)
 
 db=yaml.load(open('db.yaml'))
 app.config['MYSQL_HOST']=db['mysql_host']
