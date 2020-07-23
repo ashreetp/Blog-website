@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container" style="padding-top:200px;">
+{%if blogs %}
+<table class="table">
+    <thead>
+    {% for b in blogs %}
+    <tr><td><h3> <a href="/blogs/{{ b[0] }}">{{ b[1] }}</a> </h3></td>
+    <td><h5 style="color:aliceblue;"> Written by {{ b[2] }} </h5>
+    <td><a href="/edit-blog/{{ b[0] }}" class="btn btn-warning btn-sm">Edit</a></td>
+    <td><a href="/delete-blog/{{ b[0] }}/" class="btn btn-danger btn-sm">Delete</a></td>
+    </tr>
+    {% endfor %}
+{% else %}
+<h3 style="color:whitesmoke;">You have no blogs Blogs</h3>
+{% endif %}
+</div>
+{% endblock %}

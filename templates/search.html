@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="topnav" style="padding-top:30px;padding-left:550px;">
+    <div class="search-container">
+      <form method="POST">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    {%if blogs %}
+    <table class="table">
+        <tbody>
+            {% for b in blogs %}
+          <tr>
+            <td style="width:850px;"><h4> <a href="/blogs/{{ b[0] }}" style="color:rgb(6, 121, 252);">{{ b[1] }}</a> </h4></td>
+            <td><h5 style="color:rgb(103, 174, 255);"> Written by <hr>{{ b[2] }} </h5></td>
+          </tr>
+        {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

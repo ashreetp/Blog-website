@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Montserrat+Subrayada|Ranga&display=swap" rel="stylesheet">  
+    <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
+    <title>C Blog</title>
+    <style>
+      body {
+        background-image: url({{ url_for('static', filename='bg5.jpg') }});
+        background-repeat: no-repeat;
+        background-size: 1370px 800px;
+        background-attachment: fixed
+        }
+     
+        hr
+        {
+          height: 1px;
+          background-color: #ccc;
+          border: none;
+        }
+
+
+
+        header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.6s;
+  padding: 40px 100px;
+  z-index: 10000;
+}
+
+header.sticky {
+  padding: 5px 100px;
+  background: black;
+}
+
+header .logo {
+  position: relative;
+  font-weight: 700;
+  color: blue;
+  text-decoration: none;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.6s;
+}
+
+header ul {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header ul li {
+  position: relative;
+  list-style: none;
+}
+
+header ul li a {
+  position: relative;
+  margin: 0 15px;
+  text-decoration: none;
+  color: rgb(129, 205, 255);
+  letter-spacing: 2px;
+  font-weight: 500;
+  transiton: 0.6s;
+}
+
+header.sticky .logo,
+header.sticky li a {
+  color: blue;
+}
+img
+{
+  border: 2px black;
+  padding: -100px;
+  width: 50px;
+}
+
+    </style>
+<script>
+  window.addEventListener('scroll', function() {
+    let header = document.querySelector('header');
+    header.classList.toggle('sticky', window.scrollY > 0);
+  });
+</script>
+</head>
+<body>
+  <header>
+    <a href='/'><img src="{{ url_for('static', filename='blog3.jpg') }}"></a>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/write-blog">Write Blog</a></li>
+      {% if session['login'] == 'yes' %}
+        <li><a href="/my-blogs">My Blogs</a></li>
+      {% endif %}
+      <li>
+        <a href='/search'>Search</a>
+      </li>
+      <li><a href="/about">About</a></li>
+      {% if session['login'] != 'yes' %}
+      <li><a id="login" href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
+      {% else %}
+      <li><a href="/logout">Logout</a></li>
+      {% endif %}
+    </ul>
+  </header>
+  
+      {% block content %}
+      <div class="container" style="padding-top:100px">
+          {% with messages=get_flashed_messages() %}
+            {% if messages %}
+                {% for m in messages %}
+                    {% if m=='loginsuccess' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Login</strong> Success
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='nouser' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>No User</strong> Found
+                      
+                    </div>
+                    {% endif %}
+                    
+                    {% if m=='logintopost' %}
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                      <strong>PLease</strong> Login to post
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='logintoview' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Please Login</strong> to view
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='blogposted' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Blog</strong> has been posted
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='successful' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Registered</strong> Successful
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='passworddoesntmatch' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Password </strong> not matched
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='passwordfail' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Failed</strong> to login
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='loginfail' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Sorry</strong>
+                      
+                    </div>
+                    {% endif %}
+                    {% if m=='notfound' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Blogs not found</strong>
+                      
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+      {% endblock %} 
+
+      {% block body %}
+               
+      {% endblock %}
+    
+</body>
+</html>
