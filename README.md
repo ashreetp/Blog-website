@@ -19,3 +19,5 @@ I have created a personal blogging website using flask.
 #How it works 
 
 User can register and login only then he can post a blog.he can edit or delete the blog .In the home page all blogs will be listed,we can also search for a particular blog
+
+Please check screenshot folder for output :)
