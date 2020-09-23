@@ -96,6 +96,7 @@ def login():
                     session['login']='yes'
                     session['firstname']=user[1]
                     session['lastname']=user[2]
+                    session['username']=user[3]
                     flash('loginsuccess')
                     cur.close()
                     return redirect('/')
@@ -120,10 +121,11 @@ def write_blog():
         form=request.form
         title=form['title']
         content=form['editor']
+        username=session['username']
         if session['login']=='yes':
             author=session['firstname']+' '+session['lastname']
             cur = mysql.connection.cursor()
-            cur.execute('insert into blog(title,author,body) values(%s,%s,%s)',(title,author,content))
+            cur.execute('insert into blog(title,author,body,username) values(%s,%s,%s,%s)',(title,author,content,username))
             cur.connection.commit()
             cur.close()
             flash('blogposted')
@@ -143,8 +145,8 @@ def write_blog():
 def my_blog():
     try:
         cur=mysql.connection.cursor()
-        name=session['firstname']+' '+session['lastname']
-        res=cur.execute('select *from blog where author= "{}" '.format(name))
+        name=session['username']
+        res=cur.execute('select *from blog where username= "{}" '.format(name))
         if res>0:
             blogs=cur.fetchall()
             cur.close()
@@ -154,6 +156,7 @@ def my_blog():
     except:
         flash('logintoview')
         return redirect('/')
+
 @app.route('/edit-blog/<int:id>/',methods=['GET','POST'])
 def edit_blog(id):
     cur=mysql.connection.cursor()
